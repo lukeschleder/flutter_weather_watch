@@ -21,41 +21,39 @@ class _WeatherAppState extends State<WeatherApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Weather Watch'),
-        ),
-        body: Center(
-          child: FutureBuilder<Weather>(
-            future: _futureWeather,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final weather = snapshot.data!;
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '${weather.temperature}°C',
-                      style: const TextStyle(fontSize: 48),
-                    ),
-                    Image.network(weather.iconUrl),
-                    Text(
-                      weather.description,
-                      style: const TextStyle(fontSize: 24),
-                    ),
-                    Text(
-                      weather.locationName,
-                      style: const TextStyle(fontSize: 24),
-                    ),
-                  ],
-                );
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              }
-              return const CircularProgressIndicator();
-            },
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Weather Watch'),
+      ),
+      body: Center(
+        child: FutureBuilder<Weather>(
+          future: _futureWeather,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final weather = snapshot.data!;
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '${weather.temperature}°C',
+                    style: const TextStyle(fontSize: 48),
+                  ),
+                  Image.network(weather.iconUrl),
+                  Text(
+                    weather.description,
+                    style: const TextStyle(fontSize: 24),
+                  ),
+                  Text(
+                    weather.locationName,
+                    style: const TextStyle(fontSize: 24),
+                  ),
+                ],
+              );
+            } else if (snapshot.hasError) {
+              return Text('${snapshot.error}');
+            }
+            return const CircularProgressIndicator();
+          },
         ),
       ),
     );

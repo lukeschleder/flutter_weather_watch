@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 class Weather {
   final String locationName;
   final String iconUrl;
-  final double temperature;
+  final int temperature;
   final String description;
 
   Weather({
@@ -20,7 +20,7 @@ class Weather {
     final main = json['main'];
     final iconCode = weather['icon'];
     final iconUrl = 'https://openweathermap.org/img/w/$iconCode.png';
-    final temperature = main['temp'].toDouble();
+    final temperature = convertTemp(main['temp'].toDouble());
     final description = weather['description'];
     final locationName = json['name'];
     return Weather(
@@ -29,6 +29,10 @@ class Weather {
       temperature: temperature,
       description: description,
     );
+  }
+
+  static int convertTemp(celsiusTemp) {
+    return ((celsiusTemp * 9 / 5) + 32).round();
   }
 
   static Future<Weather> fetch(
